@@ -47,7 +47,11 @@ public OrderServiceImpl(OrderRepository orderRepository, OrderLineRepository ord
             Order updatedOrder = existingOrder.get();
             updatedOrder.setOrderDate(order.getOrderDate());
             updatedOrder.setStatus(order.getStatus());
-            // Update other fields as necessary
+
+            updatedOrder.clearOrderLines();
+            for (var line : order.getOrderLines()) {
+                updatedOrder.addOrderLine(line);
+            }
             return orderRepository.save(updatedOrder);
         }
         throw new RuntimeException("Order not found with id: " + id);
