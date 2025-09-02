@@ -7,6 +7,7 @@ import ek.osnb.jpa.orders.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -19,30 +20,44 @@ public OrderServiceImpl(OrderRepository orderRepository, OrderLineRepository ord
     this.orderRepository = orderRepository;
     this.orderLineRepository = orderLineRepository;
 }
-
     @Override
     public List<Order> getAllOrders(OrderStatus status) {
-        return List.of();
+        return orderRepository.findAll();
     }
 
     @Override
     public Order getOrderById(Long id) {
-        return null;
+        Optional<Order> order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            return order.get();
+        }
+        throw new RuntimeException("Order not found with id: " + id);
     }
 
     @Override
     public Order createOrder(Order order) {
-        return null;
+        order.setId(null); // Ensure the ID is null for new entities
+        return orderRepository.save(order);
     }
 
     @Override
     public Order updateOrder(Long id, Order order) {
-        return null;
+        Optional<Order> existingOrder = orderRepository.findById(id);
+        if (existingOrder.isPresent()) {
+            Order updatedOrder = existingOrder.get();
+            updatedOrder.setOrderDate(order.getOrderDate());
+            updatedOrder.setStatus(order.getStatus());
+            // Update other fields as necessary
+            return orderRepository.save(updatedOrder);
+        }
+        throw new RuntimeException("Order not found with id: " + id);
     }
 
     @Override
     public void deleteOrder(Long id) {
-
-    }
-}
-
+        if (orderRepository.existsById(id)) {
+            orderRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Order not found with id: " + id);
+        }
+    }    }
