@@ -1,7 +1,9 @@
 package ek.osnb.jpa.orders.dto;
 
+import ek.osnb.jpa.orders.model.Order;
 import ek.osnb.jpa.orders.model.OrderLine;
-import jakarta.persistence.criteria.Order;
+import ek.osnb.jpa.orders.model.OrderStatus;
+
 
 import java.util.ArrayList;
 import java.util.List;

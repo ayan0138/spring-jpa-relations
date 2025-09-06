@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -22,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.orderLineRepository = orderLineRepository;
     }
+
     @Override
     public List<OrderDto> getAllOrders(OrderStatus status) {
         List<Order> orders = orderRepository.findAll();

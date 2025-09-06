@@ -1,3 +1,5 @@
+package ek.osnb.jpa.orders.controller;
+
 import ek.osnb.jpa.orders.dto.OrderDto;
 import ek.osnb.jpa.orders.model.OrderStatus;
 import ek.osnb.jpa.orders.service.OrderService;
@@ -6,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
